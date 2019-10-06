@@ -60,7 +60,7 @@
         computed:{
             checkShow(){
                 if (this.blocked == this.items.id){
-                    return false
+                    return false;
                 }
                 return true;
             },
@@ -69,6 +69,7 @@
                 if (this.checkShow == false){
                     if (this.propietary == this.items.user.screen_name){
                         return true;
+
                     } else {
                         return false;
                     }

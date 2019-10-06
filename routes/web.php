@@ -15,12 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-/** API URL for testing */
+/** Auth URLs */
+Auth::routes();
+
+/** Entries resource URLs */
+Route::resource('entries', 'EntryController');
+
+/** Profiles */
+Route::get('profile/{slug}', 'ProfilesController@show')->name('profile');
+
+/** widget URLs */
+Route::resource('twittstate', 'TwittStatesController')->only(['show', 'store', 'destroy']);
+
+/** API URL for twitter resources */
 Route::get('twitter/user/{user}', 'TwitterController@show');
 
-Route::get('profile/{slug}', 'ProfilesController@show')->name('profile');
-Route::resource('twittstate', 'TwittStatesController');
+
