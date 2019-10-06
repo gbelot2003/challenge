@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h5 v-if="username">{{ username }}</h5>
         <div v-if="rows.length">
             <div class="twits" v-for="(items) in rows" v-bind:key="items.id">
                 <div class="card">
@@ -9,7 +10,7 @@
                     <div class="card-body">
                         <p v-html="items.text">{{ items.text }}</p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer" v-if="checkPerms">
                         <button type="button">Hide</button>
                     </div>
                 </div>
@@ -26,7 +27,11 @@
 
     export default {
         name: "twitter-app",
-        props:['user', 'twitts'],
+        props:{
+            username: String,
+            twitts: String,
+            propietary: String,
+        },
         data() {
             return {
                 rows: {}
@@ -43,6 +48,13 @@
                 }).catch((err) => {
                     console.log(err);
                 });
+            }
+        },
+        computed:{
+            checkPerms(){
+                 if (this.twitts == this.propietary)
+                     return true;
+                return false;
             }
         }
     }

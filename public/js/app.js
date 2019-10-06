@@ -1918,10 +1918,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "twitter-app",
-  props: ['user', 'twitts'],
+  props: {
+    username: String,
+    twitts: String,
+    propietary: String
+  },
   data: function data() {
     return {
       rows: {}
@@ -1940,6 +1945,12 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    }
+  },
+  computed: {
+    checkPerms: function checkPerms() {
+      if (this.twitts == this.propietary) return true;
+      return false;
     }
   }
 });
@@ -37266,6 +37277,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm.username ? _c("h5", [_vm._v(_vm._s(_vm.username))]) : _vm._e(),
+    _vm._v(" "),
     _vm.rows.length
       ? _c(
           "div",
@@ -37286,7 +37299,13 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(0, true)
+                _vm.checkPerms
+                  ? _c("div", { staticClass: "card-footer" }, [
+                      _c("button", { attrs: { type: "button" } }, [
+                        _vm._v("Hide")
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           }),
@@ -37295,16 +37314,7 @@ var render = function() {
       : _c("div", [_c("p", [_vm._v("No hay entradas")])])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c("button", { attrs: { type: "button" } }, [_vm._v("Hide")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
