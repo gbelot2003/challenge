@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Entry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user()->id;
+        $items = Entry::where('user_id', $user)->orderBy('id', 'DESC')->paginate(10);
+        return view('home', compact('items'));
     }
 }

@@ -16,6 +16,7 @@ class CreateEntriesTable extends Migration
         Schema::create('entries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('slug')->nullable(); // Field name same as your `saveSlugsTo`
             $table->text('body');
             $table->integer('user_id')->index();
             $table->timestamps();

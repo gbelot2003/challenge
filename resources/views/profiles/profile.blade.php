@@ -6,18 +6,26 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">Profile</div>
+                        <h4>Entries</h4>
+                        <div class="list-group">
+                            @foreach($items as $item)
+                                <div  class="list-group-item">
+                                    <a href="#{{ $item->slug }}"><h5 class="list-group-item-heading">{{ $item->title }}</h5></a>
+                                    <span style="font-size: 11px">{{ $item->created_at->format("d/m/Y") }}</span>
+                                    <p class="list-group-item-text">
+                                        {{ str_limit($item->body, 150, '...') }}
+                                    </p>
 
-                            <div class="card-body">
-                                @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif
+                                    @if(Auth::user())
+                                        @if(Auth::user()->id == $item->user_id)
+                                            <div>
+                                                <a href="#" class="btn btn-warning">Edit</a>
+                                            </div>
+                                        @endif
+                                    @endif
 
-                                You are logged in!
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-md-4">
