@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 class TwittStatesController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
+     * TwittStatesController constructor.
      * @return void
      */
     public function __construct()

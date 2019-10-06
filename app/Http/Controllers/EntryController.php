@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 
 class EntryController extends Controller
 {
+
+    /**
+     * EntryController constructor.
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +33,7 @@ class EntryController extends Controller
      */
     public function create()
     {
-        //
+        return view('entries.create');
     }
 
     /**
