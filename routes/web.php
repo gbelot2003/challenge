@@ -20,9 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 /** API URL for testing */
-Route::get('/userTimeline', function()
-{
-    return Twitter::getUserTimeline(['screen_name' => 'gbelot2003', 'count' => 1, 'format' => 'json']);
-});
-
 Route::get('twitter/user/{user}', 'TwitterController@show');
