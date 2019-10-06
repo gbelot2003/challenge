@@ -3,17 +3,7 @@
         <h5 v-if="username">{{ username }}</h5>
         <div v-if="rows.length">
             <div class="twits" v-for="(items) in rows" v-bind:key="items.id">
-                <div class="card">
-                    <div class="card-header">
-                        {{ items.created_at }}
-                    </div>
-                    <div class="card-body">
-                        <p v-html="items.text">{{ items.text }}</p>
-                    </div>
-                    <div class="card-footer" v-if="checkPerms">
-                        <button type="button">Hide</button>
-                    </div>
-                </div>
+                <card :items="items" :perms="checkPerms"></card>
             </div>
         </div>
         <div v-else>
@@ -24,9 +14,11 @@
 
 <script>
     import axios from 'axios';
+    import card from './TwitterCard';
 
     export default {
         name: "twitter-app",
+        components:{card},
         props:{
             username: String,
             twitts: String,
