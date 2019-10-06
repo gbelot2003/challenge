@@ -58,4 +58,13 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    /**
+     * Relationship with Entries
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function entires()
+    {
+        return $this->hasMany(Entry::class);
+    }
 }
