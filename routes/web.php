@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /** API URL for testing */
 Route::get('twitter/user/{user}', 'TwitterController@show');
+
+Route::get('profile/{slug}', 'ProfilesController@show')->name('profile');
