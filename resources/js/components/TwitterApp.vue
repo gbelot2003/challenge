@@ -43,7 +43,6 @@
         methods: {
             loadTwitts() {
                 axios.get('/twitter/user/' + this.twitts).then((resp) => {
-                    console.log(resp.data);
                     this.rows = resp.data;
                 }).catch((err) => {
                     console.log(err);

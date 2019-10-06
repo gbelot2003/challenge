@@ -1940,7 +1940,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/twitter/user/' + this.twitts).then(function (resp) {
-        console.log(resp.data);
         _this.rows = resp.data;
       })["catch"](function (err) {
         console.log(err);

@@ -8,13 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfilesController extends Controller
 {
-    public function __construct()
-    {
-    }
-
     public function show($slug)
     {
         $user = User::where('slug', trim($slug))->first();
+
+        if ($user == null){
+            return abort(404);
+        }
+
         return view('profiles.profile', compact('user'));
+
+
+
     }
 }

@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">Dashboard</div>
+                            <div class="card-header">Profile</div>
 
                             <div class="card-body">
                                 @if (session('status'))
@@ -23,7 +23,7 @@
                     <div class="col-md-4">
                         <div class="card-body">
                             @if(isset(Auth::user()->name))
-                                {{ $propietaruy =   $user->twitter}}
+                                {{ $propietaruy =   Auth::user()->twitter}}
                             @else
                                 {{ $propietaruy = null}}
                             @endif
