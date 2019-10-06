@@ -8,8 +8,8 @@
                 <p v-html="items.text">{{ items.text }}</p>
             </div>
             <div class="card-footer" v-if="perms">
-                <button type="button" class="btn-danger" v-if="checkShow">Hide</button>
-                <button type="button" class="btn--info" v-if="!checkShow">show</button>
+                <a href="#" class="btn btn-danger" @click.prevent="twitterHide(items.id)" v-if="checkShow">Hide</a>
+                <a href="#" class="btn btn-warning" @click.prevent="twitterShow(items.id)" v-if="!checkShow">show</a>
             </div>
         </div>
     </div>
@@ -28,13 +28,32 @@
           this.checkStatus(this.items.id);
         },
         methods:{
-            //twittstate
+
             checkStatus(ids){
                console.log(ids);
+
                 axios.get('/twittstate/' + ids).then((resp) => {
                     this.blocked = resp.data;
                 }).catch(err => {
                     console.log(err);
+                })
+            },
+
+            twitterHide(tid){
+                let datas = {
+                    'tid': tid
+                };
+
+                axios.post('/twittstate', datas).then((resp) => {
+                    let ides = resp.data;
+                    this.checkStatus(ides)
+                })
+            },
+
+            twitterShow(tid){
+                axios.delete('/twittstate/' + tid, tid).then((resp) => {
+                    let ides = resp.data;
+                    this.checkStatus(ides)
                 })
             }
         },

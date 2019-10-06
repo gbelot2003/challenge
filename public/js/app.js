@@ -1956,7 +1956,6 @@ __webpack_require__.r(__webpack_exports__);
     this.checkStatus(this.items.id);
   },
   methods: {
-    //twittstate
     checkStatus: function checkStatus(ids) {
       var _this = this;
 
@@ -1965,6 +1964,27 @@ __webpack_require__.r(__webpack_exports__);
         _this.blocked = resp.data;
       })["catch"](function (err) {
         console.log(err);
+      });
+    },
+    twitterHide: function twitterHide(tid) {
+      var _this2 = this;
+
+      var datas = {
+        'tid': tid
+      };
+      axios.post('/twittstate', datas).then(function (resp) {
+        var ides = resp.data;
+
+        _this2.checkStatus(ides);
+      });
+    },
+    twitterShow: function twitterShow(tid) {
+      var _this3 = this;
+
+      axios["delete"]('/twittstate/' + tid, tid).then(function (resp) {
+        var ides = resp.data;
+
+        _this3.checkStatus(ides);
       });
     }
   },
@@ -37332,16 +37352,34 @@ var render = function() {
             ? _c("div", { staticClass: "card-footer" }, [
                 _vm.checkShow
                   ? _c(
-                      "button",
-                      { staticClass: "btn-danger", attrs: { type: "button" } },
+                      "a",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.twitterHide(_vm.items.id)
+                          }
+                        }
+                      },
                       [_vm._v("Hide")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
                 !_vm.checkShow
                   ? _c(
-                      "button",
-                      { staticClass: "btn--info", attrs: { type: "button" } },
+                      "a",
+                      {
+                        staticClass: "btn btn-warning",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.twitterShow(_vm.items.id)
+                          }
+                        }
+                      },
                       [_vm._v("show")]
                     )
                   : _vm._e()
