@@ -1943,11 +1943,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "twitter-card",
-  props: ['items', 'perms'],
+  props: ['items', 'perms', 'propietary'],
   data: function data() {
-    return {};
+    return {
+      blocked: ''
+    };
+  },
+  mounted: function mounted() {
+    this.checkStatus(this.items.id);
+  },
+  methods: {
+    //twittstate
+    checkStatus: function checkStatus(ids) {
+      var _this = this;
+
+      console.log(ids);
+      axios.get('/twittstate/' + ids).then(function (resp) {
+        _this.blocked = resp.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  },
+  computed: {
+    checkShow: function checkShow() {
+      if (this.blocked == this.items.id) {
+        return false;
+      }
+
+      return true;
+    },
+    userShow: function userShow() {
+      if (this.checkShow == false) {
+        if (this.propietary == this.items.user.screen_name) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    }
   }
 });
 
@@ -37235,7 +37274,15 @@ var render = function() {
             return _c(
               "div",
               { key: items.id, staticClass: "twits" },
-              [_c("card", { attrs: { items: items, perms: _vm.checkPerms } })],
+              [
+                _c("card", {
+                  attrs: {
+                    items: items,
+                    perms: _vm.checkPerms,
+                    propietary: _vm.propietary
+                  }
+                })
+              ],
               1
             )
           }),
@@ -37267,31 +37314,39 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n        " + _vm._s(_vm.items.created_at)),
-      _c("br"),
-      _vm._v("\n        " + _vm._s(_vm.items.id) + "\n    ")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("p", { domProps: { innerHTML: _vm._s(_vm.items.text) } }, [
-        _vm._v(_vm._s(_vm.items.text))
-      ])
-    ]),
-    _vm._v(" "),
-    _vm.perms
-      ? _c("div", { staticClass: "card-footer" }, [
-          _c(
-            "button",
-            { staticClass: "btn-danger", attrs: { type: "button" } },
-            [_vm._v("Hide")]
-          ),
+    _vm.userShow
+      ? _c("div", [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(
+              "\n            " + _vm._s(_vm.items.created_at) + "\n        "
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn--info", attrs: { type: "button" } },
-            [_vm._v("show")]
-          )
+          _c("div", { staticClass: "card-body" }, [
+            _c("p", { domProps: { innerHTML: _vm._s(_vm.items.text) } }, [
+              _vm._v(_vm._s(_vm.items.text))
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.perms
+            ? _c("div", { staticClass: "card-footer" }, [
+                _vm.checkShow
+                  ? _c(
+                      "button",
+                      { staticClass: "btn-danger", attrs: { type: "button" } },
+                      [_vm._v("Hide")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.checkShow
+                  ? _c(
+                      "button",
+                      { staticClass: "btn--info", attrs: { type: "button" } },
+                      [_vm._v("show")]
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e()
         ])
       : _vm._e()
   ])

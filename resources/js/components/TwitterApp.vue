@@ -3,7 +3,7 @@
         <h5 v-if="username">{{ username }}</h5>
         <div v-if="rows.length">
             <div class="twits" v-for="(items) in rows" v-bind:key="items.id">
-                <card :items="items" :perms="checkPerms"></card>
+                <card :items="items" :perms="checkPerms" :propietary="propietary"></card>
             </div>
         </div>
         <div v-else>
