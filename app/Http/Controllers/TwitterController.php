@@ -10,7 +10,7 @@ class TwitterController extends Controller
     public function show($user){
 
        $dataUser = trim($user);
-       return Twitter::getUserTimeline(['screen_name' => $dataUser, 'count' => 10, 'format' => 'json']);
+       return Twitter::getUserTimeline(['screen_name' => $dataUser, 'count' => 5, 'format' => 'json']);
 
     }
 }
