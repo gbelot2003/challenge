@@ -18,7 +18,7 @@
 
                             @if(Auth::user()->id == $item->user_id)
                             <div>
-                                <a href="#" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('entries.edit', $item->id) }}" class="btn btn-warning">Edit</a>
                             </div>
                             @endif
 
