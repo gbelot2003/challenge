@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entry;
 use Illuminate\Http\Request;
 
 class EntryController extends Controller
@@ -13,7 +14,7 @@ class EntryController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('index', 'show');
     }
 
     /**
@@ -50,12 +51,13 @@ class EntryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $item = Entry::where('slug', $slug)->first();
+        return view('entries.show', compact('item'));
     }
 
     /**

@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Entry::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(),
-        'body' => $faker->realText(300),
+        'body' => $faker->realText(3000, 4),
         'user_id' => $faker->numberBetween(1, 20)
     ];
 });
