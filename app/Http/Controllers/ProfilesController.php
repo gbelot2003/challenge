@@ -6,7 +6,6 @@ use App\Entry;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class ProfilesController extends Controller
 {
     public function show($slug)
@@ -20,8 +19,6 @@ class ProfilesController extends Controller
         $items = Entry::where('user_id', $user->id)->orderBy('id', 'DESC')->paginate(10);
 
         return view('profiles.profile', compact('user', 'items'));
-
-
 
     }
 }
