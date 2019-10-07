@@ -10,7 +10,7 @@
                     <div class="list-group">
                         @foreach($items as $item)
                         <div  class="list-group-item">
-                            <a href="#{{ $item->slug }}"><h5 class="list-group-item-heading">{{ $item->title }}</h5></a>
+                            <a href="{{ route('entries.show', $item->slug) }}"><h5 class="list-group-item-heading">{{ $item->title }}</h5></a>
                             <span style="font-size: 11px">{{ $item->created_at->format("d/m/Y") }}</span>
                             <p class="list-group-item-text">
                                 {{ str_limit($item->body, 150, '...') }}
