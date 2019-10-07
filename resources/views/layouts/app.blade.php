@@ -24,6 +24,10 @@
         @include('layouts._nav')
 
         <main class="py-4">
+            <div class="container">
+                @yield('breadcrumb')
+            </div>
+
             @yield('content')
         </main>
     </div>

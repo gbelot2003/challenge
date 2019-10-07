@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item"><a href="$">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $item->title }}</li>
+        </ol>
+    </nav>
+@stop
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -7,9 +17,9 @@
                 <div class="row">
                     <div class="col-md-8">
                         <h4>{{ $item->title }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted"><span style="font-size: 11px">{{ $item->created_at->format("d/m/Y") }}</span></h6>
                         <div class="card">
                             <div class="card-body">
-                                <span style="font-size: 11px">{{ $item->created_at->format("d/m/Y") }}</span>
                                 <p style="text-align: justify">{{ $item->body }}</p>
                                 <p class="author">{{ $item->user->name }}</p>
                             </div>
