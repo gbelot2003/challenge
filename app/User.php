@@ -7,6 +7,7 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class User extends Authenticatable
 {
@@ -63,8 +64,8 @@ class User extends Authenticatable
      * Relationship with Entries
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function entires()
+    public function entries()
     {
-        return $this->hasMany(Entry::class);
+        return $this->hasMany(Entry::class)->orderBy('created_at', 'DESC');
     }
 }

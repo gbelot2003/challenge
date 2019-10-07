@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
         Orangehill\Iseed\IseedServiceProvider::class,
+        App\Providers\MacroServiceProvider::class,
 
     ],
 

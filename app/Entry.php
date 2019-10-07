@@ -5,6 +5,7 @@ namespace App;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
+use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class Entry extends Model
 {
