@@ -7,7 +7,7 @@
                 @foreach($items as $user)
                     <div class="card">
                         <ul class="list-group list-group-flush">
-                            @foreach($user->entries as $entry)
+                            @foreach($user->latestposts as $entry)
                                 <li class="list-group-item">
                                     <div>
                                        <h4><a href="/entries/{{ $entry->slug }}">{{ $entry->title }}</a></h4>
@@ -23,8 +23,11 @@
                                 </li>
                             @endforeach
                         </ul>
-                        @endforeach
                     </div>
+                @endforeach
+            </div>
+            <div class="col-md-12">
+                {{ $items->links() }}
             </div>
         </div>
     </div>

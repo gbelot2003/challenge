@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Entry;
 use App\User;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class EntryController extends Controller
@@ -26,13 +25,13 @@ class EntryController extends Controller
      */
     public function index()
     {
-        $order = 'DESC';
-        $items = User::join('entries', 'entries.user_id', '=', 'users.id')
-            ->orderBy('entries.created_at', $order)
-            ->select('users.*')->paginate(5)
-            ->eagerUnionAll(['entries' => function(HasMany $query)
-        { $query->orderBy('created_at')->limit(3);},
-        ]);
+        $items = User::with(['entries' => function($query) {
+            $query->orderBy('created_at', 'DESC');
+        }])->orderBy('created_at', 'DESC')->paginate(3);
+
+        foreach ($items as $entries){
+            $entries->latestposts = $entries->entries()->orderBy('created_at', 'desc')->limit(3)->get();
+        }
 
         return view('welcome', compact('items'));
     }
