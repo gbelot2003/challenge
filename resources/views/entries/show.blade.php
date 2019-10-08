@@ -27,9 +27,13 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card-body">
-                            <twitter-app username="{{ Auth::user()->name }}"
+                            <twitter-app username="{{ $item->user->name }}"
+                                         @if(isset(Auth::user()->name))
                                          propietary="{{ Auth::user()->twitter }}"
-                                         twitts="{{ Auth::user()->twitter }}"></twitter-app>
+                                         @else
+                                         propietary="null"
+                                         @endif
+                                         twitts="{{ $item->user->twitter }}"></twitter-app>
                         </div>
                     </div>
                 </div>

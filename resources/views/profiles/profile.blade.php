@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-8">
-                        <h4>Entries</h4>
+                        <h4>{{ $user->name }}</h4>
                         <div class="list-group">
                             @foreach($items as $item)
                                 <div  class="list-group-item">
