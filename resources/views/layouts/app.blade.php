@@ -32,4 +32,6 @@
         </main>
     </div>
 </body>
+@include('layouts._login')
+@yield('js')
 </html>

@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+
                 @foreach($items as $user)
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -31,4 +32,11 @@
             </div>
         </div>
     </div>
+
 @endsection
+
+@section('js')
+    <script>
+
+    </script>
+@stop
