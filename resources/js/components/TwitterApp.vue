@@ -7,7 +7,9 @@
             </div>
         </div>
         <div v-else>
-            <p>No hay entradas</p>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
 </template>
