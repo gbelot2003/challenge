@@ -36,6 +36,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{ $items->links() }}
                     </div>
                     <div class="col-md-4">
                         <div class="card-body">
