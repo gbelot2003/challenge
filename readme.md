@@ -27,4 +27,11 @@
 ## Importat twitter
 the twitter api now needs Oath2 keys, it will be given if need, just set the values in .env
 
+## user & passwords
+
+- user: gerardo.belot@gmail.com, password: Luna0102
+- user: vortiz@cual.com, password: Luna0102
+the rest of users passwords 'secret'
+
+
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
