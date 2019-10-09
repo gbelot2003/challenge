@@ -104,6 +104,19 @@
                 </div>
             </div>
         </div>
+        <div style="position: absolute; top: 10px; right:0px; z-index:999">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1000">
+                <div class="toast-header text-warning">
+                    <strong class="mr-auto">Message</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -123,6 +136,7 @@
                 item: [],
                 create: false,
                 delete:[],
+                message:'',
             }
         },
         mounted() {
@@ -144,6 +158,7 @@
                 axios.post('/api/v1/entries/' + this.item.id, this.item).then((resp) => {
                     $('#crudModal').modal('hide')
                     this.getEntries()
+                    this.showtoast("entrie updated correctly");
                 })
             },
             modalCreate() {
@@ -165,7 +180,9 @@
                 axios.post('/api/v1/entries-create', cdada).then((resp) => {
                     $('#crudModal').modal('hide')
                     this.getEntries()
-                    this.create = false
+                    this.create = false;
+                    this.showtoast("entrie created correctly");
+
                 })
             },
 
@@ -202,6 +219,10 @@
                     this.page = resp.data.current_page;
                     this.total = resp.data.total;
                 })
+            },
+            showtoast(message){
+                $('.toast').toast('show', 'delay:15');
+                this.message = message;
             }
         },
 

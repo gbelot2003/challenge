@@ -8,13 +8,9 @@
                         <span>{{ items.user.screen_name }}</span><br/>
                         {{ dates }}
                     </div>
-
                     <hr />
                 </div>
-
-
                 <p v-html="items.text">{{ items.text }}</p>
-
             </div>
             <div class="card-footer" v-if="perms">
                 <a href="#" class="btn btn-danger" @click.prevent="twitterHide(items.id)" v-if="checkShow">
@@ -35,6 +31,7 @@
                 </a>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -57,7 +54,6 @@
 
             checkStatus(ids){
                console.log(ids);
-
                 axios.get('/twittstate/' + ids).then((resp) => {
                     this.blocked = resp.data;
                 }).catch(err => {

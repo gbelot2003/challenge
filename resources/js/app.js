@@ -20,7 +20,6 @@ import Paginate from 'vuejs-paginate'
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-
 Vue.component('paginate', Paginate);
 Vue.component('twitter-app', require('./components/TwitterApp').default);
 Vue.component('twitter-card', require('./components/TwitterCard').default);

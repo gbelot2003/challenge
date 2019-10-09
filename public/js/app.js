@@ -1971,6 +1971,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "dashboard",
@@ -1984,7 +1997,8 @@ __webpack_require__.r(__webpack_exports__);
       rows: [],
       item: [],
       create: false,
-      "delete": []
+      "delete": [],
+      message: ''
     };
   },
   mounted: function mounted() {
@@ -2007,6 +2021,8 @@ __webpack_require__.r(__webpack_exports__);
         $('#crudModal').modal('hide');
 
         _this.getEntries();
+
+        _this.showtoast("entrie updated correctly");
       });
     },
     modalCreate: function modalCreate() {
@@ -2030,6 +2046,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getEntries();
 
         _this2.create = false;
+
+        _this2.showtoast("entrie created correctly");
       });
     },
     modalDelete: function modalDelete(index) {
@@ -2069,6 +2087,10 @@ __webpack_require__.r(__webpack_exports__);
         _this5.page = resp.data.current_page;
         _this5.total = resp.data.total;
       });
+    },
+    showtoast: function showtoast(message) {
+      $('.toast').toast('show', 'delay:15');
+      this.message = message;
     }
   },
   computed: {
@@ -2162,9 +2184,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
 //
 //
 //
@@ -55427,6 +55446,41 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticStyle: {
+          position: "absolute",
+          top: "10px",
+          right: "0px",
+          "z-index": "999"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "toast",
+            attrs: {
+              role: "alert",
+              "aria-live": "assertive",
+              "aria-atomic": "true",
+              "data-delay": "1000"
+            }
+          },
+          [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "toast-body" }, [
+              _vm._v(
+                "\n                " + _vm._s(_vm.message) + "\n            "
+              )
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -55496,6 +55550,27 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "toast-header text-warning" }, [
+      _c("strong", { staticClass: "mr-auto" }, [_vm._v("Message")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "ml-2 mb-1 close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "toast",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true
