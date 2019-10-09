@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "moment": "^2.24.0",
+        "momentjs": "^2.0.0",
         "vuejs-datatable": "^2.0.0-alpha.3",
         "vuejs-paginate": "^2.1.0"
     }

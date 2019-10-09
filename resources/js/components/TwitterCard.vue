@@ -1,11 +1,20 @@
 <template>
     <div class="card">
         <div v-if="userShow">
-            <div class="card-header">
-                {{ items.created_at }}
-            </div>
             <div class="card-body">
+                <div>
+                    <img :src="items.user.profile_image_url" class="rounded" alt="picture" style="display: inline-flex;">
+                    <div style="display: inline-block">
+                        <span>{{ items.user.screen_name }}</span><br/>
+                        {{ dates }}
+                    </div>
+
+                    <hr />
+                </div>
+
+
                 <p v-html="items.text">{{ items.text }}</p>
+
             </div>
             <div class="card-footer" v-if="perms">
                 <a href="#" class="btn btn-danger" @click.prevent="twitterHide(items.id)" v-if="checkShow">
@@ -30,6 +39,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         name: "twitter-card",
         props:['items', 'perms', 'propietary'],
@@ -76,6 +87,9 @@
             }
         },
         computed:{
+            dates () {
+                return moment(this.items.created_at).format('DD/MM/YYYY');
+            },
             checkShow(){
                 if (this.blocked == this.items.id){
                     return false;
