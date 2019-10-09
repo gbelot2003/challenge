@@ -1907,6 +1907,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "dashboard",
@@ -1917,13 +1951,22 @@ __webpack_require__.r(__webpack_exports__);
       page: '',
       per_page: '',
       total: '',
-      rows: []
+      rows: [],
+      item: {}
     };
   },
   mounted: function mounted() {
     this.getEntries();
   },
   methods: {
+    modalEdit: function modalEdit(index) {
+      console.log(index);
+      this.item = index;
+      $('#crudModal').modal({
+        keyboard: false,
+        backdrop: 'static'
+      });
+    },
     getEntries: function getEntries() {
       var _this = this;
 
@@ -37428,7 +37471,23 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(items.title))]),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c("td", [_vm._v(_vm._s(items.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.modalEdit(items)
+                        }
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  )
+                ])
               ])
             }),
             0
@@ -37458,7 +37517,101 @@ var render = function() {
           1
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "crudModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "crudModal",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v(_vm._s(_vm.item.title))]
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Title")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.item.title,
+                          expression: "item.title"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "title" },
+                      domProps: { value: _vm.item.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.item, "title", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Body")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.item.body,
+                          expression: "item.body"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "body", rows: "10" },
+                      domProps: { value: _vm.item.body },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.item, "body", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -37469,9 +37622,18 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-12" }, [
       _c("h4", { staticClass: "stitle" }, [_vm._v("Dashboard")]),
       _vm._v(" "),
-      _c("a", { staticClass: "ctitle btn btn-primary", attrs: { href: "#" } }, [
-        _vm._v("Add")
-      ])
+      _c(
+        "a",
+        {
+          staticClass: "ctitle btn btn-primary",
+          attrs: {
+            href: "#",
+            "data-toggle": "modal",
+            "data-target": "#crudModal"
+          }
+        },
+        [_vm._v("Add")]
+      )
     ])
   },
   function() {
@@ -37481,19 +37643,49 @@ var staticRenderFns = [
     return _c("thead", [
       _c("th", [_vm._v("Id")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Titulo")]),
+      _c("th", [_vm._v("Title")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Editar")])
+      _c("th", [_vm._v("Date")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "btn btn-warning", attrs: { href: "#" } }, [
-        _vm._v("Edit")
-      ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Update changes")]
+      )
     ])
   }
 ]

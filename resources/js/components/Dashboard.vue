@@ -3,21 +3,23 @@
         <div class="row">
             <div class="col-md-12">
                 <h4 class="stitle">Dashboard</h4>
-                <a href="#" class="ctitle btn btn-primary">Add</a>
+                <a href="#" class="ctitle btn btn-primary" data-toggle="modal" data-target="#crudModal">Add</a>
             </div>
             <div class="col-md-12">
                 <table class="table table-bordered">
                     <thead>
                     <th>Id</th>
-                    <th>Titulo</th>
-                    <th>Editar</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Modify</th>
                     </thead>
                     <tbody>
                     <tr v-for="(items) in rows" v-bind:key="items.id">
                         <td>{{ items.id }}</td>
                         <td>{{ items.title }}</td>
+                        <td>{{ items.created_at }}</td>
                         <td>
-                            <a href="#" class="btn btn-warning">Edit</a>
+                            <a href="#" class="btn btn-warning" @click="modalEdit(items)">Edit</a>
                         </td>
                     </tr>
                     </tbody>
@@ -40,6 +42,38 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="crudModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ item.title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" name="title" v-model="item.title" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Body</label>
+                                <textarea v-model="item.body" name="body" class="form-control" rows="10"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Update changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -56,12 +90,25 @@
                 per_page: '',
                 total: '',
                 rows: [],
+                item:{}
             }
         },
         mounted() {
             this.getEntries();
         },
         methods: {
+            modalEdit(index) {
+                console.log(index);
+                this.item = index;
+                $('#crudModal').modal(
+                    {
+                        keyboard: false,
+                        backdrop: 'static'
+                    }
+                );
+
+
+            },
             getEntries() {
                 axios.get('/api/v1/entries/' + this.user).then((resp) => {
                     this.rows = resp.data.data;
