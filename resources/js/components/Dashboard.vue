@@ -23,7 +23,7 @@
                             <a href="#" class="btn btn-warning" @click="modalEdit(items)">Edit</a>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-danger" @click="modalEdit(items)">Delete</a>
+                            <a href="#" class="btn btn-danger" @click="modalDelete(items)">Delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -43,6 +43,28 @@
                         :next-class="'page-link'">
                     </paginate>
                 </nav>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete entrie</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">Are you sure you want to delete this entry? this action can´t be undo</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" @click="saveDelete">Delete</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -73,8 +95,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" v-if="!create" class="btn btn-primary" @click="saveUpdate">Update changes</button>
-                        <button type="button" v-if="create" class="btn btn-primary" @click="saveCreate">Save changes</button>
+                        <button type="button" v-if="!create" class="btn btn-primary" @click="saveUpdate">Update
+                            changes
+                        </button>
+                        <button type="button" v-if="create" class="btn btn-primary" @click="saveCreate">Save changes
+                        </button>
                     </div>
                 </div>
             </div>
@@ -95,8 +120,9 @@
                 per_page: '',
                 total: '',
                 rows: [],
-                item:[],
+                item: [],
                 create: false,
+                delete:[],
             }
         },
         mounted() {
@@ -113,14 +139,14 @@
                     }
                 );
             },
-            saveUpdate(){
+            saveUpdate() {
                 this.create = false;
                 axios.post('/api/v1/entries/' + this.item.id, this.item).then((resp) => {
                     $('#crudModal').modal('hide')
                     this.getEntries()
                 })
             },
-            modalCreate(){
+            modalCreate() {
                 this.item = [];
                 this.create = true;
                 $('#crudModal').modal(
@@ -130,16 +156,34 @@
                     }
                 );
             },
-            saveCreate(){
+            saveCreate() {
                 let cdada = {
-                    'title' : this.item.title,
-                    'body' : this.item.body,
+                    'title': this.item.title,
+                    'body': this.item.body,
                 }
 
                 axios.post('/api/v1/entries-create', cdada).then((resp) => {
                     $('#crudModal').modal('hide')
                     this.getEntries()
                     this.create = false
+                })
+            },
+
+            modalDelete(index) {
+
+                $('#deleteModal').modal(
+                    {
+                        keyboard: false,
+                        backdrop: 'static'
+                    }
+                );
+                this.delete = index;
+            },
+            saveDelete(){
+                axios.get('/api/v1/entries-delete/' + this.delete.id).then((resp) =>{
+                    $('#deleteModal').modal('hide')
+                    this.getEntries()
+                    this.delete = []
                 })
             },
             getEntries() {

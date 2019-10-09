@@ -1946,6 +1946,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "dashboard",
@@ -1958,7 +1983,8 @@ __webpack_require__.r(__webpack_exports__);
       total: '',
       rows: [],
       item: [],
-      create: false
+      create: false,
+      "delete": []
     };
   },
   mounted: function mounted() {
@@ -2006,24 +2032,42 @@ __webpack_require__.r(__webpack_exports__);
         _this2.create = false;
       });
     },
-    getEntries: function getEntries() {
+    modalDelete: function modalDelete(index) {
+      $('#deleteModal').modal({
+        keyboard: false,
+        backdrop: 'static'
+      });
+      this["delete"] = index;
+    },
+    saveDelete: function saveDelete() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
-        _this3.rows = resp.data.data;
-        _this3.per_page = resp.data.per_page;
-        _this3.page = resp.data.current_page;
-        _this3.total = resp.data.total;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries-delete/' + this["delete"].id).then(function (resp) {
+        $('#deleteModal').modal('hide');
+
+        _this3.getEntries();
+
+        _this3["delete"] = [];
       });
     },
-    clickCallback: function clickCallback(pageNum) {
+    getEntries: function getEntries() {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
         _this4.rows = resp.data.data;
         _this4.per_page = resp.data.per_page;
         _this4.page = resp.data.current_page;
         _this4.total = resp.data.total;
+      });
+    },
+    clickCallback: function clickCallback(pageNum) {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+        _this5.rows = resp.data.data;
+        _this5.per_page = resp.data.per_page;
+        _this5.page = resp.data.current_page;
+        _this5.total = resp.data.total;
       });
     }
   },
@@ -37548,7 +37592,7 @@ var render = function() {
                       attrs: { href: "#" },
                       on: {
                         click: function($event) {
-                          return _vm.modalEdit(items)
+                          return _vm.modalDelete(items)
                         }
                       }
                     },
@@ -37591,6 +37635,54 @@ var render = function() {
       {
         staticClass: "modal fade",
         attrs: {
+          id: "deleteModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "deleteModal",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: { click: _vm.saveDelete }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
           id: "crudModal",
           tabindex: "-1",
           role: "dialog",
@@ -37614,7 +37706,7 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.item.title))]
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(3)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -37691,7 +37783,11 @@ var render = function() {
                         attrs: { type: "button" },
                         on: { click: _vm.saveUpdate }
                       },
-                      [_vm._v("Update changes")]
+                      [
+                        _vm._v(
+                          "Update\n                        changes\n                    "
+                        )
+                      ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -37703,7 +37799,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: { click: _vm.saveCreate }
                       },
-                      [_vm._v("Save changes")]
+                      [_vm._v("Save changes\n                    ")]
                     )
                   : _vm._e()
               ])
@@ -37729,6 +37825,39 @@ var staticRenderFns = [
       _c("th", [_vm._v("Modify")]),
       _vm._v(" "),
       _c("th", [_vm._v("Delete")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Delete entrie")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("p", { staticClass: "text-danger" }, [
+        _vm._v(
+          "Are you sure you want to delete this entry? this action can´t be undo"
+        )
+      ])
     ])
   },
   function() {

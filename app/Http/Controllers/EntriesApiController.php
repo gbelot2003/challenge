@@ -28,7 +28,6 @@ class EntriesApiController extends Controller
         return response()->json($items, 200);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -74,6 +73,8 @@ class EntriesApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $items = Entry::findOrFail($id);
+        $items->delete();
+        return response()->json('done', 200);
     }
 }

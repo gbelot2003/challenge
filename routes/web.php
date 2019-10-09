@@ -25,6 +25,7 @@ Route::resource('entries', 'EntryController');
 Route::get('api/v1/entries/{id}', 'EntriesApiController@index');
 Route::post('api/v1/entries/{id}', 'EntriesApiController@update');
 Route::post('api/v1/entries-create', 'EntriesApiController@store');
+Route::get('api/v1/entries-delete/{id}', 'EntriesApiController@destroy');
 
 
 /** Profiles */
