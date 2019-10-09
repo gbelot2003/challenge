@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h4 class="stitle">Dashboard</h4>
-                <a href="#" class="ctitle btn btn-primary" data-toggle="modal" data-target="#crudModal">Add</a>
+                <a href="#" class="ctitle btn btn-primary" @click="modalCreate">Add</a>
             </div>
             <div class="col-md-12">
                 <table class="table table-bordered">
@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Update changes</button>
+                        <button type="button" class="btn btn-primary" @click="saveUpdate">Update changes</button>
                     </div>
                 </div>
             </div>
@@ -106,8 +106,20 @@
                         backdrop: 'static'
                     }
                 );
-
-
+            },
+            saveUpdate(){
+                axios.post('/api/v1/entries/' + this.item.id, this.item).then((resp) => {
+                    $('#crudModal').modal('hide')
+                    this.getEntries()
+                })
+            },
+            modalCreate(){
+                $('#crudModal').modal(
+                    {
+                        keyboard: false,
+                        backdrop: 'static'
+                    }
+                );
             },
             getEntries() {
                 axios.get('/api/v1/entries/' + this.user).then((resp) => {
@@ -127,6 +139,7 @@
                 })
             }
         },
+
         computed: {
             totalPage() {
                 return Math.round(this.total / this.per_page)

@@ -23,6 +23,8 @@ Route::resource('entries', 'EntryController');
 
 /** Entries index  */
 Route::get('api/v1/entries/{id}', 'EntriesApiController@index');
+Route::post('api/v1/entries/{id}', 'EntriesApiController@update');
+
 
 /** Profiles */
 Route::get('profile/{slug}', 'ProfilesController@show')->name('profile');

@@ -1967,24 +1967,39 @@ __webpack_require__.r(__webpack_exports__);
         backdrop: 'static'
       });
     },
-    getEntries: function getEntries() {
+    saveUpdate: function saveUpdate() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
-        _this.rows = resp.data.data;
-        _this.per_page = resp.data.per_page;
-        _this.page = resp.data.current_page;
-        _this.total = resp.data.total;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/v1/entries/' + this.item.id, this.item).then(function (resp) {
+        $('#crudModal').modal('hide');
+
+        _this.getEntries();
       });
     },
-    clickCallback: function clickCallback(pageNum) {
+    modalCreate: function modalCreate() {
+      $('#crudModal').modal({
+        keyboard: false,
+        backdrop: 'static'
+      });
+    },
+    getEntries: function getEntries() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
         _this2.rows = resp.data.data;
         _this2.per_page = resp.data.per_page;
         _this2.page = resp.data.current_page;
         _this2.total = resp.data.total;
+      });
+    },
+    clickCallback: function clickCallback(pageNum) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+        _this3.rows = resp.data.data;
+        _this3.per_page = resp.data.per_page;
+        _this3.page = resp.data.current_page;
+        _this3.total = resp.data.total;
       });
     }
   },
@@ -37457,11 +37472,23 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("h4", { staticClass: "stitle" }, [_vm._v("Dashboard")]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "ctitle btn btn-primary",
+            attrs: { href: "#" },
+            on: { click: _vm.modalCreate }
+          },
+          [_vm._v("Add")]
+        )
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-12" }, [
         _c("table", { staticClass: "table table-bordered" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "tbody",
@@ -37547,7 +37574,7 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.item.title))]
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -37606,7 +37633,26 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(3)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.saveUpdate }
+                  },
+                  [_vm._v("Update changes")]
+                )
+              ])
             ])
           ]
         )
@@ -37615,27 +37661,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h4", { staticClass: "stitle" }, [_vm._v("Dashboard")]),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "ctitle btn btn-primary",
-          attrs: {
-            href: "#",
-            "data-toggle": "modal",
-            "data-target": "#crudModal"
-          }
-        },
-        [_vm._v("Add")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -37666,27 +37691,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Update changes")]
-      )
-    ])
   }
 ]
 render._withStripped = true
