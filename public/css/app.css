@@ -9693,5 +9693,13 @@ a.text-dark:hover, a.text-dark:focus {
 .close:hover {
   color: #b9a78a;
 }
+.stitle {
+  display: inline-flex !important;
+  margin-right: 77%;
+}
 
+.ctitle {
+  display: inline-flex;
+  text-align: right !important;
+}
 

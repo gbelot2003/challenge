@@ -25,8 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->id;
-        $items = Entry::where('user_id', $user)->orderBy('id', 'DESC')->paginate(10);
-        return view('home', compact('items'));
+        return view('home');
     }
 }

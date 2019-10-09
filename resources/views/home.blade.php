@@ -15,8 +15,10 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-8">
-                    <h4>Dashboard</h4>
-                    <div class="list-group">
+                    <dashboard :user="{{ Auth::user()->id }}" />
+                    {{--
+                     <h4>Dashboard</h4>
+                     <div class="list-group">
                         @foreach($items as $item)
                         <div  class="list-group-item">
                             <a href="{{ route('entries.show', $item->slug) }}"><h5 class="list-group-item-heading">{{ $item->title }}</h5></a>
@@ -34,7 +36,7 @@
                         </div>
                         @endforeach
                     </div>
-                    {{ $items->links() }}
+                    {{ $items->links() }}--}}
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">

@@ -21,6 +21,9 @@ Auth::routes();
 /** Entries resource URLs */
 Route::resource('entries', 'EntryController');
 
+/** Entries index  */
+Route::get('api/v1/entries/{id}', 'EntriesApiController@index');
+
 /** Profiles */
 Route::get('profile/{slug}', 'ProfilesController@show')->name('profile');
 

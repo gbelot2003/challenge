@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Paginate from 'vuejs-paginate'
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,8 +20,11 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+
+Vue.component('paginate', Paginate);
 Vue.component('twitter-app', require('./components/TwitterApp').default);
 Vue.component('twitter-card', require('./components/TwitterCard').default);
+Vue.component('dashboard', require('./components/Dashboard').default);
 
 
 /**
