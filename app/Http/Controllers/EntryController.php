@@ -67,6 +67,7 @@ class EntryController extends Controller
     {
         $item = Entry::where('slug', $slug)->first();
         return view('entries.show', compact('item'));
+
     }
 
     /**
@@ -77,7 +78,8 @@ class EntryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Entry::where('id', $id)->first();
+        return view('entries.edit', compact('item'));
     }
 
     /**
@@ -89,7 +91,14 @@ class EntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+        $item = Entry::findOrFail($id);
+        $item->update($validated);
+        return redirect('/home');
     }
 
     /**
