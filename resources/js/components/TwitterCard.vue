@@ -8,8 +8,22 @@
                 <p v-html="items.text">{{ items.text }}</p>
             </div>
             <div class="card-footer" v-if="perms">
-                <a href="#" class="btn btn-danger" @click.prevent="twitterHide(items.id)" v-if="checkShow">Hide</a>
-                <a href="#" class="btn btn-warning" @click.prevent="twitterShow(items.id)" v-if="!checkShow">show</a>
+                <a href="#" class="btn btn-danger" @click.prevent="twitterHide(items.id)" v-if="checkShow">
+                    <div v-if="!spin">
+                        Hide
+                    </div>
+                    <div class="spinner-border" role="status" v-if="spin">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </a>
+                <a href="#" class="btn btn-warning" @click.prevent="twitterShow(items.id)" v-if="!checkShow">
+                    <div v-if="!spin">
+                        show
+                    </div>
+                    <div class="spinner-border" role="status" v-if="spin">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -21,7 +35,8 @@
         props:['items', 'perms', 'propietary'],
         data(){
             return{
-                blocked: ''
+                blocked: '',
+                spin: false,
             }
         },
         mounted(){
@@ -43,17 +58,20 @@
                 let datas = {
                     'tid': tid
                 };
-
+                this.spin = true;
                 axios.post('/twittstate', datas).then((resp) => {
                     let ides = resp.data;
                     this.checkStatus(ides)
+                    this.spin = false;
                 })
             },
 
             twitterShow(tid){
+                this.spin = true;
                 axios.delete('/twittstate/' + tid, tid).then((resp) => {
                     let ides = resp.data;
                     this.checkStatus(ides)
+                    this.spin = false;
                 })
             }
         },

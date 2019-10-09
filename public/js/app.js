@@ -1879,6 +1879,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1946,12 +1948,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "twitter-card",
   props: ['items', 'perms', 'propietary'],
   data: function data() {
     return {
-      blocked: ''
+      blocked: '',
+      spin: false
     };
   },
   mounted: function mounted() {
@@ -1974,19 +1991,25 @@ __webpack_require__.r(__webpack_exports__);
       var datas = {
         'tid': tid
       };
+      this.spin = true;
       axios.post('/twittstate', datas).then(function (resp) {
         var ides = resp.data;
 
         _this2.checkStatus(ides);
+
+        _this2.spin = false;
       });
     },
     twitterShow: function twitterShow(tid) {
       var _this3 = this;
 
+      this.spin = true;
       axios["delete"]('/twittstate/' + tid, tid).then(function (resp) {
         var ides = resp.data;
 
         _this3.checkStatus(ides);
+
+        _this3.spin = false;
       });
     }
   },
@@ -37318,11 +37341,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "spinner-border", attrs: { role: "status" } },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-    )
+    return _c("div", { staticClass: "d-flex justify-content-center" }, [
+      _c("div", { staticClass: "spinner-border", attrs: { role: "status" } }, [
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -37376,7 +37399,30 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Hide")]
+                      [
+                        !_vm.spin
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                    Hide\n                "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.spin
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "spinner-border",
+                                attrs: { role: "status" }
+                              },
+                              [
+                                _c("span", { staticClass: "sr-only" }, [
+                                  _vm._v("Loading...")
+                                ])
+                              ]
+                            )
+                          : _vm._e()
+                      ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -37393,7 +37439,30 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("show")]
+                      [
+                        !_vm.spin
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                    show\n                "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.spin
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "spinner-border",
+                                attrs: { role: "status" }
+                              },
+                              [
+                                _c("span", { staticClass: "sr-only" }, [
+                                  _vm._v("Loading...")
+                                ])
+                              ]
+                            )
+                          : _vm._e()
+                      ]
                     )
                   : _vm._e()
               ])
