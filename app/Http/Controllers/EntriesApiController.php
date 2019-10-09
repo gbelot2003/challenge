@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntriesApiController extends Controller
 {
@@ -36,7 +37,14 @@ class EntriesApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+        $request['user_id'] = Auth::user()->id;
+        $item = Entry::create($request->all());
+        return response()->json($item, 200);
     }
 
     /**

@@ -1941,6 +1941,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "dashboard",
@@ -1952,7 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
       per_page: '',
       total: '',
       rows: [],
-      item: {}
+      item: [],
+      create: false
     };
   },
   mounted: function mounted() {
@@ -1970,6 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
     saveUpdate: function saveUpdate() {
       var _this = this;
 
+      this.create = false;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/v1/entries/' + this.item.id, this.item).then(function (resp) {
         $('#crudModal').modal('hide');
 
@@ -1977,29 +1984,46 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     modalCreate: function modalCreate() {
+      this.item = [];
+      this.create = true;
       $('#crudModal').modal({
         keyboard: false,
         backdrop: 'static'
       });
     },
-    getEntries: function getEntries() {
+    saveCreate: function saveCreate() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
-        _this2.rows = resp.data.data;
-        _this2.per_page = resp.data.per_page;
-        _this2.page = resp.data.current_page;
-        _this2.total = resp.data.total;
+      var cdada = {
+        'title': this.item.title,
+        'body': this.item.body
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/v1/entries-create', cdada).then(function (resp) {
+        $('#crudModal').modal('hide');
+
+        _this2.getEntries();
+
+        _this2.create = false;
       });
     },
-    clickCallback: function clickCallback(pageNum) {
+    getEntries: function getEntries() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user).then(function (resp) {
         _this3.rows = resp.data.data;
         _this3.per_page = resp.data.per_page;
         _this3.page = resp.data.current_page;
         _this3.total = resp.data.total;
+      });
+    },
+    clickCallback: function clickCallback(pageNum) {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/entries/' + this.user + "?page=" + pageNum).then(function (resp) {
+        _this4.rows = resp.data.data;
+        _this4.per_page = resp.data.per_page;
+        _this4.page = resp.data.current_page;
+        _this4.total = resp.data.total;
       });
     }
   },
@@ -37514,6 +37538,22 @@ var render = function() {
                     },
                     [_vm._v("Edit")]
                   )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.modalEdit(items)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
                 ])
               ])
             }),
@@ -37643,15 +37683,29 @@ var render = function() {
                   [_vm._v("Close")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: { click: _vm.saveUpdate }
-                  },
-                  [_vm._v("Update changes")]
-                )
+                !_vm.create
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.saveUpdate }
+                      },
+                      [_vm._v("Update changes")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.create
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.saveCreate }
+                      },
+                      [_vm._v("Save changes")]
+                    )
+                  : _vm._e()
               ])
             ])
           ]
@@ -37672,7 +37726,9 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Date")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Modify")])
+      _c("th", [_vm._v("Modify")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Delete")])
     ])
   },
   function() {

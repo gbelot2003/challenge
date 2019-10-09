@@ -12,6 +12,7 @@
                     <th>Title</th>
                     <th>Date</th>
                     <th>Modify</th>
+                    <th>Delete</th>
                     </thead>
                     <tbody>
                     <tr v-for="(items) in rows" v-bind:key="items.id">
@@ -20,6 +21,9 @@
                         <td>{{ items.created_at }}</td>
                         <td>
                             <a href="#" class="btn btn-warning" @click="modalEdit(items)">Edit</a>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger" @click="modalEdit(items)">Delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -69,7 +73,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="saveUpdate">Update changes</button>
+                        <button type="button" v-if="!create" class="btn btn-primary" @click="saveUpdate">Update changes</button>
+                        <button type="button" v-if="create" class="btn btn-primary" @click="saveCreate">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +95,8 @@
                 per_page: '',
                 total: '',
                 rows: [],
-                item:{}
+                item:[],
+                create: false,
             }
         },
         mounted() {
@@ -108,18 +114,33 @@
                 );
             },
             saveUpdate(){
+                this.create = false;
                 axios.post('/api/v1/entries/' + this.item.id, this.item).then((resp) => {
                     $('#crudModal').modal('hide')
                     this.getEntries()
                 })
             },
             modalCreate(){
+                this.item = [];
+                this.create = true;
                 $('#crudModal').modal(
                     {
                         keyboard: false,
                         backdrop: 'static'
                     }
                 );
+            },
+            saveCreate(){
+                let cdada = {
+                    'title' : this.item.title,
+                    'body' : this.item.body,
+                }
+
+                axios.post('/api/v1/entries-create', cdada).then((resp) => {
+                    $('#crudModal').modal('hide')
+                    this.getEntries()
+                    this.create = false
+                })
             },
             getEntries() {
                 axios.get('/api/v1/entries/' + this.user).then((resp) => {
