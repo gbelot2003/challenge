@@ -24,4 +24,7 @@
 - docker-compose up -d nginx
 - docker-compose exec workspace bash
 
+## Importat twitter
+the twitter api now needs Oath2 keys, it will be given if need, just set the values in .env
+
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
