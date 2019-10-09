@@ -3,7 +3,8 @@
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </nav>
 @stop
@@ -14,7 +15,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-8">
-                    <h4>Entries</h4>
+                    <h4>Dashboard</h4>
                     <div class="list-group">
                         @foreach($items as $item)
                         <div  class="list-group-item">
