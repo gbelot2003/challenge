@@ -6,7 +6,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Instalation
+## Installation
 - git clone https://github.com/gbelot2003/challenge -b master
 - cd ./challenge 
 - composer install
